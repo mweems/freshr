@@ -3,11 +3,16 @@
 		<title>Create Post</title>	
 	</head>
 	<body>
-		<h2>Start a new list of posts</h2>
+		<h2>New Post</h2>
 		<form method="POST">
 			<input name='item_text' id='item_text' placeholder="What you are selling"/>
 			{% csrf_token %}
 		</form>
+		<table id='list_table'>
+			{% for item in items %}
+				<tr><td>{{ item.text }}</td></tr>
+			{% endfor %}
+		</table>
 	</body>
 	
 </html>

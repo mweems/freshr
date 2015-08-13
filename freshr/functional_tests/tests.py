@@ -42,6 +42,8 @@ class NewFishermanTest(LiveServerTestCase):
 		
 		inputBox.send_keys('50lbs Tuna, $5 a pound')
 		inputBox.send_keys(Keys.ENTER)
+		first_list_url = self.browser.current_url
+		self.assertRegex(first_list_url, '/feed/.+')
 
 		self.check_for_row_in_list_table('50lbs Tuna, $5 a pound')
 
@@ -51,5 +53,23 @@ class NewFishermanTest(LiveServerTestCase):
 
 		self.check_for_row_in_list_table('50lbs Tuna, $5 a pound')
 		self.check_for_row_in_list_table('30lbs Ahi, $5 a pound')
-		
-		self.fail('Finish the test!')
+
+		self.browser.quit()
+		self.browser = webdriver.Firefox()
+
+		self.browser.get('http://localhost:8000/create')
+		page_text = self.browser.find_element_by_tag_name('body').text
+		self.assertNotIn('50lbs Tuna', page_text)
+		self.assertNotIn('30lbs Ahi', page_text)
+
+		inputBox = self.browser.find_element_by_id('item_text')
+		inputBox.send_keys('Mackeral 20lbs, $2 a pound')
+		inputBox.send_keys(Keys.ENTER)
+
+		second_list_url = self.browser.current_url
+		self.assertRegex(second_list_url, '/feed/.+')
+		self.assertNotEqual(second_list_url, first_list_url)
+
+		page_text = self.browser.find_element_by_tag_name('body').text
+		self.assertNotIn('50lbs Tuna', page_text)
+		self.assertIn('Mackeral 20lbs, $2 a pound', page_text)
