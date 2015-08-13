@@ -29,12 +29,6 @@ class CreatePostPageTest(TestCase):
 		expected_html = render_to_string('create.html')
 		self.assertEqual(response.content.decode(), expected_html)
 
-	def test_create_page_only_saves_items_when_necessary(self):
-		request = HttpRequest()
-		create_page(request)
-		self.assertEqual(Item.objects.count(), 0)
-
-
 class ItemModelTest(TestCase):
 
 	def test_saving_and_retrieving_items(self):

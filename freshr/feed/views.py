@@ -6,9 +6,6 @@ def home_page(request):
 	return render(request, 'home.html')
 
 def create_page(request):
-	if request.method == 'POST':
-		Item.objects.create(text=request.POST['item_text'])
-		return redirect('/feed/one-list')
 	return render(request, 'create.html')
 
 def new_list(request):
