@@ -21,5 +21,6 @@ urlpatterns = [
 	url(r'^$', views.home_page, name='home'),
 	url(r'^create$', views.create_page, name='create'),
     url(r'^feed/new$', views.new_list, name='new_list'),
-	url(r'^feed/one-list/$', views.view_list, name='view_list')
+	url(r'^feed/(\d+)/$', views.view_list, name='view_list'),
+    url(r'^feed/(\d+)/add_item$', views.add_item, name='add_item')
 ]
