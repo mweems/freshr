@@ -31,7 +31,9 @@ class NewFishermanTest(LiveServerTestCase):
 		self.assertRegex(create_post_url, '/create')
 
 	def test_can_create_a_post_and_retrieve_it_later(self):
-		self.browser.get('http://localhost:8000/create')
+		self.browser.get(self.live_server_url)
+		sell_button = self.browser.find_element_by_id('sell_fish')
+		sell_button.send_keys(Keys.ENTER)
 		self.assertIn('Create Post', self.browser.title)
 		header_text = self.browser.find_element_by_tag_name('h2').text
 		
@@ -56,7 +58,9 @@ class NewFishermanTest(LiveServerTestCase):
 		self.browser.quit()
 		self.browser = webdriver.Firefox()
 
-		self.browser.get('http://localhost:8000/create')
+		self.browser.get(self.live_server_url)
+		sell_button = self.browser.find_element_by_id('sell_fish')
+		sell_button.send_keys(Keys.ENTER)
 		page_text = self.browser.find_element_by_tag_name('body').text
 		self.assertNotIn('50lbs Tuna', page_text)
 		self.assertNotIn('30lbs Ahi', page_text)
