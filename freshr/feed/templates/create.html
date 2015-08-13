@@ -4,14 +4,12 @@
 	</head>
 	<body>
 		<h2>New Post</h2>
-		<input id='name' placeholder="Your Name"/><br>
-		<input id='phone' placeholder="Your Phone Number"/><br>
-		<input id='new_item' placeholder="What you are selling"/><br>
-		<br>
-		<button type="submit" id='submit_button'>Submit</button>
-
+		<form method="POST">
+			<input name='item_text' id='item_text' placeholder="What you are selling"/>
+			{% csrf_token %}
+		</form>
 		<table id='list_table'>
-			
+			<tr><td>{{ new_item_text }}</td></tr>
 		</table>
 	</body>
 	

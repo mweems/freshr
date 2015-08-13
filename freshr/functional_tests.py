@@ -31,25 +31,25 @@ class NewFishermanTest(unittest.TestCase):
 		header_text = self.browser.find_element_by_tag_name('h2').text
 		self.assertIn('New Post', header_text)
 		
-		nameInputBox = self.browser.find_element_by_id('name')
-		phoneInputBox = self.browser.find_element_by_id('phone')
-		inputBox = self.browser.find_element_by_id('new_item')
-		submitButton = self.browser.find_element_by_tag_name('button')
+		inputBox = self.browser.find_element_by_id('item_text')
 		
-		self.assertEqual(nameInputBox.get_attribute('placeholder'), 'Your Name')
-		self.assertEqual(phoneInputBox.get_attribute('placeholder'), 'Your Phone Number')
 		self.assertEqual(inputBox.get_attribute('placeholder'), 'What you are selling')
 		
-		nameInputBox.send_keys('Paula')
-		phoneInputBox.send_keys('808-452-9509')
 		inputBox.send_keys('50lbs Tuna, $5 a pound')
-		submitButton.send_keys(Keys.ENTER)
+		inputBox.send_keys(Keys.ENTER)
 
 		table = self.browser.find_element_by_id('list_table')
-		rows = table.find_element_by_tag_name('tr')
-		self.assertTrue(any(row.text == 'Paula' for row in rows))
-		self.assertTrue(any(row.text == '808-452-9509' for row in rows))
-		self.assertTrue(any(row.text == '50lbs Tuna, $5 a pound' for row in rows))
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn('50lbs Tuna, $5 a pound', [row.text for row in rows])
+
+		inputBox = self.browser.find_element_by_id('item_text')
+		inputBox.send_keys('30lbs Ahi, $5 a pound')
+		inputBox.send_keys(Keys.ENTER)
+
+		table = self.browser.find_element_by_id('list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn('50lbs Tuna, $5 a pound', [row.text for row in rows])
+		self.assertIn('30lbs Ahi, $5 a pound', [row.text for row in rows])
 
 		self.fail('Finish the test!')
 
