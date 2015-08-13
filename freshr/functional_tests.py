@@ -11,6 +11,11 @@ class NewFishermanTest(unittest.TestCase):
 	def tearDown(self):
 		self.browser.quit()
 
+	def check_for_row_in_list_table(self, row_text):
+		table = self.browser.find_element_by_id('list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn(row_text, [row.text for row in rows])
+
 	def test_can_choose_to_sell_fish(self):
 		self.browser.get('http://localhost:8000')
 		self.assertIn('Freshr', self.browser.title)
@@ -38,19 +43,15 @@ class NewFishermanTest(unittest.TestCase):
 		inputBox.send_keys('50lbs Tuna, $5 a pound')
 		inputBox.send_keys(Keys.ENTER)
 
-		table = self.browser.find_element_by_id('list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertIn('50lbs Tuna, $5 a pound', [row.text for row in rows])
+		self.check_for_row_in_list_table('50lbs Tuna, $5 a pound')
 
 		inputBox = self.browser.find_element_by_id('item_text')
 		inputBox.send_keys('30lbs Ahi, $5 a pound')
 		inputBox.send_keys(Keys.ENTER)
 
-		table = self.browser.find_element_by_id('list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertIn('50lbs Tuna, $5 a pound', [row.text for row in rows])
-		self.assertIn('30lbs Ahi, $5 a pound', [row.text for row in rows])
-
+		self.check_for_row_in_list_table('50lbs Tuna, $5 a pound')
+		self.check_for_row_in_list_table('30lbs Ahi, $5 a pound')
+		
 		self.fail('Finish the test!')
 
 	
