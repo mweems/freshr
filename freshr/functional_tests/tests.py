@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from django.test import LiveServerTestCase
+import time
 
 class NewFishermanTest(LiveServerTestCase):
 
@@ -34,6 +35,7 @@ class NewFishermanTest(LiveServerTestCase):
 		self.browser.get(self.live_server_url)
 		sell_button = self.browser.find_element_by_id('sell_fish')
 		sell_button.send_keys(Keys.ENTER)
+		time.sleep(2)
 		self.assertIn('Create Post', self.browser.title)
 		header_text = self.browser.find_element_by_tag_name('h2').text
 		
@@ -61,6 +63,7 @@ class NewFishermanTest(LiveServerTestCase):
 		self.browser.get(self.live_server_url)
 		sell_button = self.browser.find_element_by_id('sell_fish')
 		sell_button.send_keys(Keys.ENTER)
+		time.sleep(2)
 		page_text = self.browser.find_element_by_tag_name('body').text
 		self.assertNotIn('50lbs Tuna', page_text)
 		self.assertNotIn('30lbs Ahi', page_text)
