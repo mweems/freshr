@@ -29,27 +29,6 @@ class CreatePostPageTest(TestCase):
 		expected_html = render_to_string('create.html')
 		self.assertEqual(response.content.decode(), expected_html)
 
-	def test_create_page_can_save_a_post_request(self):
-		request = HttpRequest()
-		request.method = 'POST'
-		request.POST['item_text'] = 'A new item'
-
-		response = create_page(request)
-
-		self.assertEqual(Item.objects.count(), 1)
-		new_item = Item.objects.first()
-		self.assertEqual(new_item.text, 'A new item')
-
-	def test_create_page_redirects_after_a_post(self):
-		request = HttpRequest()
-		request.method = 'POST'
-		request.POST['item_text'] = 'A new item'
-
-		response = create_page(request)
-
-		self.assertEqual(response.status_code, 302)
-		self.assertEqual(response['location'], '/feed/one-list')
-
 	def test_create_page_only_saves_items_when_necessary(self):
 		request = HttpRequest()
 		create_page(request)
@@ -87,4 +66,23 @@ class ListViewTest(TestCase):
 		response = self.client.get('/feed/one-list/')
 		self.assertContains(response, 'itemey 1')
 		self.assertContains(response, 'itemey 2')
+
+class NewListTest(TestCase):
+
+	def test_saving_a_post_request(self):
+		self.client.post(
+			'/feed/new',
+			data={'item_text': 'A new item'}
+			)
+		self.assertEqual(Item.objects.count(), 1)
+		new_item = Item.objects.first()
+		self.assertEqual(new_item.text, 'A new item')
+
+	def test_redirects_after_a_post(self):
+		response = self.client.post(
+			'/feed/new',
+			data={'item_text': 'A new item'}
+			)
+		self.assertRedirects(response, '/feed/one-list/')
+
 		

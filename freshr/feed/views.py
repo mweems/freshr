@@ -9,7 +9,11 @@ def create_page(request):
 	if request.method == 'POST':
 		Item.objects.create(text=request.POST['item_text'])
 		return redirect('/feed/one-list')
-	return render(request, 'create.html')	
+	return render(request, 'create.html')
+
+def new_list(request):
+	Item.objects.create(text=request.POST['item_text'])
+	return redirect('/feed/one-list/')	
 
 def view_list(request):
 	items = Item.objects.all()
