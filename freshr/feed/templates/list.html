@@ -4,7 +4,7 @@
 	</head>
 	<body>
 		<h2>New Post</h2>
-		<form method="POST">
+		<form method="POST" action='/create'>
 			<input name='item_text' id='item_text' placeholder="What you are selling"/>
 			{% csrf_token %}
 		</form>

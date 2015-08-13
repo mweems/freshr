@@ -34,7 +34,6 @@ class NewFishermanTest(LiveServerTestCase):
 		self.browser.get('http://localhost:8000/create')
 		self.assertIn('Create Post', self.browser.title)
 		header_text = self.browser.find_element_by_tag_name('h2').text
-		self.assertIn('New Post', header_text)
 		
 		inputBox = self.browser.find_element_by_id('item_text')
 		
