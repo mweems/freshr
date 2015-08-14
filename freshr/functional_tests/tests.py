@@ -1,9 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import time
 
-class NewFishermanTest(LiveServerTestCase):
+class NewFishermanTest(StaticLiveServerTestCase):
 
 	def setUp(self):
 		self.browser = webdriver.Firefox()
@@ -80,21 +80,3 @@ class NewFishermanTest(LiveServerTestCase):
 		page_text = self.browser.find_element_by_tag_name('body').text
 		self.assertNotIn('50lbs Tuna', page_text)
 		self.assertIn('Mackeral 20lbs, $2 a pound', page_text)
-
-	def test_layout_and_styling(self):
-		self.browser.get(self.live_server_url)
-		self.go_to_sell_page()
-		self.browser.set_window_size(1024, 768)
-
-		inputBox = self.browser.find_element_by_id('item_text')
-		self.assertAlmostEqual(
-			inputBox.location['x'] + inputBox.size['width'] /2,
-			512, delta=5
-		)
-		inputBox.send_keys('testing\n')
-		inputBox = self.browser.find_element_by_id('item_text')
-		self.assertAlmostEqual(
-			inputBox.location['x'] + inputBox.size['width'] /2,
-			512, delta=5
-		)
-
