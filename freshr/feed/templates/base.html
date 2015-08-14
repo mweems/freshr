@@ -1,0 +1,15 @@
+<html>
+	<head>
+		<title>Create Post</title>	
+	</head>
+	<body>
+		<h2>{% block header_text %}{% endblock %}</h2>
+		<form method="POST" action="{% block form_action%}{% endblock %}">
+			<input name='item_text' id='item_text' placeholder="What you are selling"/>
+			{% csrf_token %}
+		</form>
+		{% block table %}
+		{% endblock %}
+	</body>
+	
+</html>

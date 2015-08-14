@@ -20,7 +20,7 @@ class HomePageTest(TestCase):
 class CreatePostPageTest(TestCase):
 
 	def test_create_url_resolves_to_create_page_view(self):
-		found = resolve('/create')
+		found = resolve('/feed/create')
 		self.assertEqual(found.func, create_page)
 
 	def test_create_page_returns_correct_html(self):

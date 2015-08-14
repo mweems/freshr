@@ -20,6 +20,5 @@ from feed import urls
 
 urlpatterns = [
 	url(r'^$', views.home_page, name='home'),
-	url(r'^create$', views.create_page, name='create'),
     url(r'^feed/', include(urls))
 ]

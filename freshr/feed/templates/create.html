@@ -1,13 +1,5 @@
-<html>
-	<head>
-		<title>Create Post</title>	
-	</head>
-	<body>
-		<h2>Start a new list of posts</h2>
-		<form method="POST" action='/feed/new'>
-			<input name='item_text' id='item_text' placeholder="What you are selling"/>
-			{% csrf_token %}
-		</form>
-	</body>
-	
-</html>
+{% extends 'base.html' %}
+
+{% block header_text %}Create a new post{% endblock %}
+
+{% block form_action %}/feed/new{% endblock %}
