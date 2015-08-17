@@ -5,7 +5,7 @@ class ItemFormTest(TestCase):
 
 	def test_form_renders_item_text_input(self):
 		form = ItemForm()
-		self.assertIn('placeholder="Enter a to-do item"', form.as_p())
+		self.assertIn('placeholder="What you are selling"', form.as_p())
 		self.assertIn('class="form-control input-lg"', form.as_p())
 
 	def test_form_validation_for_blank_items(self):

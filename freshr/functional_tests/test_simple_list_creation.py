@@ -27,7 +27,7 @@ class NewFishermanTest(FunctionalTest):
 		self.go_to_sell_page()
 		header_text = self.browser.find_element_by_tag_name('h2').text
 		
-		inputBox = self.browser.find_element_by_id('item_text')
+		inputBox = self.get_item_input_box()
 		
 		self.assertEqual(inputBox.get_attribute('placeholder'), 'What you are selling')
 		
@@ -38,7 +38,7 @@ class NewFishermanTest(FunctionalTest):
 
 		self.check_for_row_in_list_table('50lbs Tuna, $5 a pound')
 
-		inputBox = self.browser.find_element_by_id('item_text')
+		inputBox = self.get_item_input_box()
 		inputBox.send_keys('30lbs Ahi, $5 a pound')
 		inputBox.send_keys(Keys.ENTER)
 
@@ -54,7 +54,7 @@ class NewFishermanTest(FunctionalTest):
 		self.assertNotIn('50lbs Tuna', page_text)
 		self.assertNotIn('30lbs Ahi', page_text)
 
-		inputBox = self.browser.find_element_by_id('item_text')
+		inputBox = self.get_item_input_box()
 		inputBox.send_keys('Mackeral 20lbs, $2 a pound')
 		inputBox.send_keys(Keys.ENTER)
 

@@ -78,7 +78,7 @@ class ListViewTest(TestCase):
 
 		self.client.post(
 			'/feed/%d/' % correct_list.id,
-			data={'item_text': 'A new item to an existing list'}
+			data={'text': 'A new item to an existing list'}
 		)
 
 		self.assertEqual(Item.objects.count(), 1)
@@ -92,7 +92,7 @@ class ListViewTest(TestCase):
 
 		response = self.client.post(
 			'/feed/%d/' % correct_list.id,
-			data={'item_text': 'A new item to an existing list'}
+			data={'text': 'A new item to an existing list'}
 		)
 
 		self.assertRedirects(response, '/feed/%d/' % correct_list.id)
@@ -101,7 +101,7 @@ class ListViewTest(TestCase):
 		list_ = List.objects.create()
 		response = self.client.post(
 			'/feed/%d/' % list_.id,
-			data={'item_text': ''}
+			data={'text': ''}
 		)
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'list.html')
@@ -114,7 +114,7 @@ class NewListTest(TestCase):
 	def test_saving_a_post_request(self):
 		self.client.post(
 			'/feed/new',
-			data={'item_text': 'A new item'}
+			data={'text': 'A new item'}
 			)
 		self.assertEqual(Item.objects.count(), 1)
 		new_item = Item.objects.first()
@@ -123,13 +123,13 @@ class NewListTest(TestCase):
 	def test_redirects_after_a_post(self):
 		response = self.client.post(
 			'/feed/new',
-			data={'item_text': 'A new item'}
+			data={'text': 'A new item'}
 			)
 		new_list = List.objects.first()
 		self.assertRedirects(response, '/feed/%d/' % new_list.id)
 
 	def test_validation_errors_are_sent_back_to_create_page_template(self):
-		response = self.client.post('/feed/new', data={'item_text': ''})
+		response = self.client.post('/feed/new', data={'text': ''})
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'create.html')
 		expected_error = "You cannot have an empty list item"
@@ -138,7 +138,7 @@ class NewListTest(TestCase):
 	def test_invalid_list_items_are_not_saved(self):
 		self.client.post(
 			'/feed/new', 
-			data={'item_text': ''}
+			data={'text': ''}
 		)
 		self.assertEqual(List.objects.count(), 0)
 		self.assertEqual(Item.objects.count(), 0)

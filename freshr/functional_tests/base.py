@@ -38,3 +38,6 @@ class FunctionalTest(StaticLiveServerTestCase):
 		sell_button.send_keys(Keys.ENTER)
 		time.sleep(1)
 		self.assertIn('Create Post', self.browser.title)
+
+	def get_item_input_box(self):
+		return self.browser.find_element_by_id('id_text')

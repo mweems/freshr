@@ -13,12 +13,12 @@ class ItemValidationTest(FunctionalTest):
 
 		self.browser.get(self.server_url)
 		self.go_to_sell_page()
-		self.browser.find_element_by_id('item_text').send_keys('\n')
+		self.get_item_input_box().send_keys('\n')
 
 		error = self.browser.find_element_by_css_selector('.has-error')
 		self.assertEqual(error.text, "You cannot have an empty list item")
 
-		self.browser.find_element_by_id('item_text').send_keys("20lbs Ahi\n")
+		self.get_item_input_box().send_keys("20lbs Ahi\n")
 		self.check_for_row_in_list_table("20lbs Ahi")
 
 		self.browser.find_element_by_id('item_text').send_keys('\n')
@@ -27,6 +27,6 @@ class ItemValidationTest(FunctionalTest):
 		error = self.browser.find_element_by_css_selector('.has-error')
 		self.assertEqual(error.text, "You cannot have an empty list item")
 
-		self.browser.find_element_by_id('item_text').send_keys('10lbs BlueFin Tuna\n')
+		self.self.get_item_input_box().send_keys('10lbs BlueFin Tuna\n')
 		self.check_for_row_in_list_table('20lbs Ahi')
 		self.check_for_row_in_list_table('10lbs BlueFin Tuna')
