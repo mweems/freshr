@@ -9,6 +9,9 @@ def home_page(request):
 def create_page(request):
 	return render(request, 'create.html')
 
+def feed_page(request):
+	return render(request, 'feed.html')
+
 def new_list(request):
 	list_ = List.objects.create()
 	item = Item.objects.create(text=request.POST['item_text'], list=list_)

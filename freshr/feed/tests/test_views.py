@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.core.urlresolvers import resolve
 from django.http import HttpRequest
 from django.template.loader import render_to_string
-from feed.views import home_page, create_page
+from feed.views import home_page, create_page, feed_page
 from feed.models import Item, List
 
 class HomePageTest(TestCase):
@@ -27,6 +27,18 @@ class CreatePostPageTest(TestCase):
 		request = HttpRequest()
 		response = create_page(request)
 		expected_html = render_to_string('create.html')
+		self.assertEqual(response.content.decode(), expected_html)
+
+class NewsFeedPageTest(TestCase):
+
+	def test_news_feed_url_resolves_to_newsfeed_page_view(self):
+		found = resolve('/feed/feed')
+		self.assertEqual(found.func, feed_page)
+
+	def test_feed_page_returns_correct_html(self):
+		request = HttpRequest()
+		response = feed_page(request)
+		expected_html = render_to_string('feed.html')
 		self.assertEqual(response.content.decode(), expected_html)
 
 
