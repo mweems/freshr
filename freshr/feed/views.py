@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.exceptions import ValidationError
 from feed.models import Item, List
+from feed.forms import ItemForm
 
 def home_page(request):
 	return render(request, 'home.html')
 
 def create_page(request):
-	return render(request, 'create.html')
+	return render(request, 'create.html', {'form': ItemForm()})
 
 def feed_page(request):
 	return render(request, 'feed.html')

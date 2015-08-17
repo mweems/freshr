@@ -4,6 +4,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 from feed.views import home_page, create_page, feed_page
 from feed.models import Item, List
+from feed.forms import ItemForm
 
 class HomePageTest(TestCase):
 
@@ -18,16 +19,15 @@ class HomePageTest(TestCase):
 		self.assertEqual(response.content.decode(), expected_html)
 
 class CreatePostPageTest(TestCase):
+	maxDiff = None
 
-	def test_create_url_resolves_to_create_page_view(self):
-		found = resolve('/feed/create')
-		self.assertEqual(found.func, create_page)
+	def test_create_page_renders_create_template(self):
+		response = self.client.get('/feed/create')
+		self.assertTemplateUsed(response, 'create.html')
 
-	def test_create_page_returns_correct_html(self):
-		request = HttpRequest()
-		response = create_page(request)
-		expected_html = render_to_string('create.html')
-		self.assertEqual(response.content.decode(), expected_html)
+	def test_create_page_uses_item_form(self):
+		response = self.client.get('/feed/create')
+		self.assertIsInstance(response.context['form'], ItemForm)
 
 class NewsFeedPageTest(TestCase):
 
